@@ -5,7 +5,7 @@ import * as path from 'path';
 import rimraf from 'rimraf';
 
 const notifications = [];
-const notificationsPerProduct = {
+const notificationsPerApp = {
   unspecific: []
 };
 
@@ -26,7 +26,7 @@ const outDir = path.join(__dirname, '../out');
   }
 
   await fs.promises.mkdir(outDir, { recursive: true });
-  await fs.promises.mkdir(path.join(outDir, 'products'), { recursive: true });
+  await fs.promises.mkdir(path.join(outDir, 'apps'), { recursive: true });
   await fs.promises.mkdir(path.join(outDir, 'all'), { recursive: true });
   await fs.promises.mkdir(path.join(outDir, 'content'), { recursive: true });
 
@@ -48,10 +48,10 @@ const outDir = path.join(__dirname, '../out');
 
     const smallInfo = {
       id: id,
-      onlyForProducts: data.onlyForProducts,
-      onlyForVersion: data.onlyForVersion,
-      onlyAfter: data.onlyAfter,
-      onlyBefore: data.onlyBefore,
+      apps: data.apps,
+      appVersions: data.appVersions,
+      after: data.after,
+      before: data.before,
       title: data.title,
       summary: data.summary
     };
@@ -64,15 +64,15 @@ const outDir = path.join(__dirname, '../out');
 
     notifications.push(smallInfo);
 
-    if (data.onlyForProducts) {
-      for (const product of data.onlyForProducts) {
-        if (!Object.keys(notificationsPerProduct).includes(product)) {
-          notificationsPerProduct[product] = [];
+    if (data.apps) {
+      for (const app of data.apps) {
+        if (!Object.keys(notificationsPerApp).includes(app)) {
+          notificationsPerApp[app] = [];
         }
-        notificationsPerProduct[product].push(smallInfo);
+        notificationsPerApp[app].push(smallInfo);
       }
     } else {
-      notificationsPerProduct['unspecific'].push(smallInfo);
+      notificationsPerApp['unspecific'].push(smallInfo);
     }
 
     await fs.promises.writeFile(path.join(outDir, `all/${id}.json`), JSON.stringify(detailedInfo, null, 1));
@@ -83,15 +83,15 @@ const outDir = path.join(__dirname, '../out');
   await fs.promises.writeFile(path.join(outDir, `notifications.json`), JSON.stringify(notifications, null, 1));
   await fs.promises.writeFile(path.join(outDir, `notifications.tiny.json`), JSON.stringify(notifications));
 
-  for (const [product, notifications] of Object.entries(notificationsPerProduct)) {
-    if (product !== 'unspecific') {
-      notificationsPerProduct[product].push(...notificationsPerProduct['unspecific']);
+  for (const [app, notifications] of Object.entries(notificationsPerApp)) {
+    if (app !== 'unspecific') {
+      notificationsPerApp[app].push(...notificationsPerApp['unspecific']);
     }
   }
 
-  for (const [product, productNotifications] of Object.entries(notificationsPerProduct)) {
-    await fs.promises.writeFile(path.join(outDir, `products/${product}.json`), JSON.stringify(productNotifications, null, 1));
-    await fs.promises.writeFile(path.join(outDir, `products/${product}.tiny.json`), JSON.stringify(productNotifications));
+  for (const [app, appNotifications] of Object.entries(notificationsPerApp)) {
+    await fs.promises.writeFile(path.join(outDir, `apps/${app}.json`), JSON.stringify(appNotifications, null, 1));
+    await fs.promises.writeFile(path.join(outDir, `apps/${app}.tiny.json`), JSON.stringify(appNotifications));
   }
 
 })();

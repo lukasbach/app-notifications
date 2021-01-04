@@ -1,6 +1,6 @@
 ---
-onlyForVersion: 1.0.7
-onlyForProducts: ['yana']
+appVersions: ['1.0.7']
+apps: ['yana']
 title: Yana 1.0.7
 summary: See whats new!
 date: 01.01.2021

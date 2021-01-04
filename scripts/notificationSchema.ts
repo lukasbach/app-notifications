@@ -3,16 +3,16 @@ export const notificationSchema = {
     id: {
       type: 'string',
     },
-    onlyForVersion: {
-      type: 'string',
-    },
-    onlyForProducts: {
+    appVersions: {
       type: 'array',
     },
-    onlyBefore: {
+    apps: {
+      type: 'array',
+    },
+    after: {
       type: 'string',
     },
-    onlyAfter: {
+    before: {
       type: 'string',
     },
     title: {
