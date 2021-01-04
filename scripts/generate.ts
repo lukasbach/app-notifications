@@ -3,11 +3,14 @@ import * as fs from 'fs';
 import { notificationSchema } from './notificationSchema';
 import * as path from 'path';
 import rimraf from 'rimraf';
+import MarkdownIt from 'markdown-it';
 
 const notifications = [];
 const notificationsPerApp = {
   unspecific: []
 };
+
+const md = new MarkdownIt();
 
 const outDir = path.join(__dirname, '../out');
 
@@ -78,6 +81,7 @@ const outDir = path.join(__dirname, '../out');
     await fs.promises.writeFile(path.join(outDir, `all/${id}.json`), JSON.stringify(detailedInfo, null, 1));
     await fs.promises.writeFile(path.join(outDir, `all/${id}.tiny.json`), JSON.stringify(detailedInfo));
     await fs.promises.writeFile(path.join(outDir, `content/${id}.md`), content);
+    await fs.promises.writeFile(path.join(outDir, `content/${id}.html`), md.render(content));
   }
 
   await fs.promises.writeFile(path.join(outDir, `notifications.json`), JSON.stringify(notifications, null, 1));
