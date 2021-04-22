@@ -1,0 +1,35 @@
+[
+ {
+  "id": "yana-changelog-v1.0.10",
+  "apps": [
+   "yana"
+  ],
+  "appVersions": [
+   "1.0.10"
+  ],
+  "title": "New things in Yana 1.0.10",
+  "summary": "Changelog"
+ },
+ {
+  "id": "yana-changelog-v1.0.11",
+  "apps": [
+   "yana"
+  ],
+  "appVersions": [
+   "1.0.11"
+  ],
+  "title": "New things in Yana 1.0.11",
+  "summary": "Changelog"
+ },
+ {
+  "id": "yana-changelog-v1.0.8",
+  "apps": [
+   "yana"
+  ],
+  "appVersions": [
+   "1.0.8"
+  ],
+  "title": "New things in Yana 1.0.8",
+  "summary": "Changelog"
+ }
+]
